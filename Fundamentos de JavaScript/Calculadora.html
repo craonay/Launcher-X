@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora</title>
+</head>
+<body>
+  <h1>Calculadora</h1>
+
+  <!-- Aquí irá el código de la calculadora -->
+
+
+<table>
+  <tr>
+    <td><input type="text" id="num1"></td>
+    <td><input type="text" id="num2"></td>
+    <td><input type="text" id="resultado"></td>
+  </tr>
+  <tr>
+    <td><button id="suma">+</button></td>
+    <td><button id="resta">-</button></td>
+    <td><button id="multiplicacion">*</button></td>
+    <td><button id="division">/</button></td>
+    <td><button id="raiz">√</button></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td><input type="text" id="num1"></td>
+    <td><input type="text" id="num2"></td>
+    <td><input type="text" id="base"></td>
+    <td><input type="text" id="exponente"></td>
+    <td><input type="text" id="resultado"></td>
+  </tr>
+  <tr>
+    <td><button id="suma">+</button></td>
+    <td><button id="resta">-</button></td>
+    <td><button id="multiplicacion">*</button></td>
+    <td><button id="division">/</button></td>
+    <td><button id="raiz">√</button></td>
+  </tr>
+  <tr>
+    <td><button id="potencia">x^y</button></td>
+    <td><button id="residuo">%</button></td>
+  </tr>
+</table>
+<script>
+  // Asigna eventos a cada uno de los botones
+  document.getElementById("suma").addEventListener("click", suma);
+  document.getElementById("resta").addEventListener("click", resta);
+  document.getElementById("multiplicacion").addEventListener("click", multiplicacion);
+  document.getElementById("division").addEventListener("click", division);
+  document.getElementById("raiz").addEventListener("click", raiz);
+  document.getElementById("potencia").addEventListener("click", potencia);
+  document.getElementById("residuo").addEventListener("click", residuo);
+  document.getElementById("borrar").addEventListener("click", borrar);
+
+  // Funciones para cada una de las operaciones
+  function suma() {
+    // Obtiene los valores de los inputs
+    var num1 = parseFloat(document.getElementById("num1").value);
+    var num2 = parseFloat(document.getElementById("num2").value);
+
+    // Realiza la suma y muestra el resultado
+    var resultado = num1 + num2;
+    document.getElementById("resultado").value = resultado;
+  }
+
+  function resta() {
+    // Obtiene los valores de los inputs
+    var num1 = parseFloat(document.getElementById("num1").value);
+    var num2 = parseFloat(document.getElementById("num2").value);
+
+    // Realiza la resta y muestra el resultado
+    var resultado = num1 - num2;
+    document.getElementById("resultado").value = resultado;
+  }
+
+  function multiplicacion() {
+    // Obtiene los valores de los inputs
+    var num1 = parseFloat(document.getElementById("num1").value);
+    var num2 = parseFloat(document.getElementById("num2").value);
+
+    // Realiza la multiplicación y muestra el resultado
+    var resultado = num1 * num2;
+    document.getElementById("resultado").value = resultado;
+  }
+
+  function division() {
+    // Obtiene los valores de los inputs
+    var num1 = parseFloat(document.getElementById("num1").value);
+    var num2 = parseFloat(document.getElementById("num2").value);
+
+    // Realiza la división y muestra el resultado
+    var resultado = num1 / num2;
+    document.getElementById("resultado").value = resultado;
+  }
+
+  function raiz() {
+    // Obtiene el valor del input
+    var num1 = parseFloat(document.getElementById("num1").value);
+
+    // Realiza la raíz cuadrada y muestra el resultado
+    var resultado = Math.sqrt(num1);
+    document.getElementById("resultado").value = resultado;
+  }
+
+  function potencia() {
+    //
+  </script>
+  </body>
+</html>

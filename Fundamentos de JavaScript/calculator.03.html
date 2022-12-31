@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"content="IE=edge">
+    <meta name="viewport"contect="width=device-width,initial-scale=1.0">
+    <title>Practica LaunchX Html</title>
+<html>
+<head>
+  <title>Calculadora</title>
+</head>
+<body>
+  <h1>Calculadora</h1>
+
+  <form>
+    <input type="text" id="operand1" placeholder="Operando 1">
+    <br>
+    <input type="text" id="operand2" placeholder="Operando 2">
+    <br>
+    <button type="button" onclick="sum()">Suma</button>
+    <button type="button" onclick="subtract()">Resta</button>
+    <button type="button" onclick="multiply()">Multiplicación</button>
+    <button type="button" onclick="divide()">División</button>
+    <button type="button" onclick="squareRoot()">Raíz cuadrada</button>
+    <button type="button" onclick="power()">Potencia</button>
+    <button type="button" onclick="remainder()">Residuo</button>
+    <button type="button" onclick="clear()">Borrar</button>
+    <br>
+    <p>Resultado: <span id="result"></span></p>
+  </form>
+
+  <script>
+    function sum() {
+      var operand1 = parseFloat(document.getElementById('operand1').value);
+      var operand2 = parseFloat(document.getElementById('operand2').value);
+      var result = operand1 + operand2;
+      document.getElementById('result').innerHTML = result;
+    }
+    function power() {
+      var operand1 = parseFloat(document.getElementById('operand1').value);
+      var operand2 = parseFloat(document.getElementById('operand2').value);
+      var result = Math.pow(operand1, operand2);
+      document.getElementById('result').innerHTML = result;
+    }
+
+    function remainder() {
+      var operand1 = parseFloat(document.getElementById('operand1').value);
+      var operand2 = parseFloat(document.getElementById('operand2').value);
+      var result = operand1 % operand2;
+      document.getElementById('result').innerHTML = result;
+    }
+
+    function clear() {
+      document.getElementById('operand1').value = '';
+      document.getElementById('operand2').value = '';
+      document.getElementById('result').innerHTML = '';
+
+    }
+    function subtract() {
+      var operand1 = parseFloat(document.getElementById('operand1').value);
+      var operand2 = parseFloat(document.getElementById('operand2').value);
+      var result = operand1 - operand2;
+      document.getElementById('result').innerHTML = result;
+    }
+
+    function multiply() {
+      var operand1 = parseFloat(document.getElementById('operand1').value);
+      var operand2 = parseFloat(document.getElementById('operand2').value);
+      var result = operand1 * operand2;
+      document.getElementById('result').innerHTML = result;
+    }
+
+    function divide() {
+      var operand1 = parseFloat(document.getElementById('operand1').value);
+      var operand2 = parseFloat(document.getElementById('operand2').value);
+      var result = operand1 / operand2;
+      document.getElementById('result').innerHTML = result;
+    }
+
+    function squareRoot() {
+      var operand1 = parseFloat(document.getElementById('operand1').value);
+      var result = Math.sqrt(operand1);
+      document.getElementById('result').innerHTML = result;
+    }
+
+    function power() {
+      var operand1 = parseFloat(document.getElementById('operand1').value);
+      var operand2 = parseFloat(document..getElementById('operand1').value);
+      var result = Math.sqrt(operand1);
+
+  </script>
+</body>
+</html>
+
+    
