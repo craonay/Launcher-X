@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"content="IE=edge">
+    <meta name="viewport"contect="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+<head>
+    <title> Pokedex</title>
+    <script src="vue.js"></script>
+    <script src="lscache.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="sprite.css">
+</head>
+<body>
+    <div id="cuerpo" class="row">
+        <div class="col-md-5 col-md-offset-3">
+            <br>
+            <h1>Pokedex</h1>
+            <div class="todo_pokedex">
+            <p class="peso">{{ pokemon_data[1] }}</p>
+            <p class="weight">{{ pokemon_data[2] }}</p>
+            <p><img src="pokedex.gif" class="dex"></p>
+        <!--Cuando el id cambia cambia tambien el sprite del pokemon!-->
+            <p class="pokemon" :id="index()"></p>           
+        <!--Como ven llamamos a 2 funciones cuando hacemos click en los botones-->
+            <p> <button class="btn btn-success" @click="restar(), getDatos()">Anterior pokemon</button>
+                <button class="btn btn-success" @click="pokemon_index++, getDatos()">Siguiente pokemon</button></p>
+        <!--Enviamos true para forzar el lscache.set osea, jalar datos de la API-->
+            <p><button class="btn btn-info" @click="getDatos(true)">Ver informacion</button></p>
+            </div>
+        </div>      
+        <div class="col-md-3 descripcion">
+      <!--El index 0 nos da el nombre del pokemon y el '|' representa un filto y capitalize es para poner en mayuscula la primera letra
+      pueden leer esto en documentacion de Vue-->
+            <p><h1>{{ pokemon_data[0] | capitalize }}</h1> 
+      <!--
+      FIJENSE COMO HAGO UN BIND A LA ETIQUETA IMG PARA MOSTRAR LA PARTE DE ENFRENTE Y DE ATRAS
+      -->
+      <img :src="pokemon_data[4]"> <img :src="pokemon_data[3]"></p>
+    
+            <div class="alert alert-info">
+                Tipos:  
+                        <ul><!--
+      Directiva for de Vue, recorre un array y mostramos los elementos pueden leer la documentacion
+      -->
+                            <li v-for="tipo in pokemon_data[5]">{{ tipo | capitalize }}</li>
+                        </ul>   
+            </div>
+            <div class="alert alert-info">
+                Habilidades:    
+                        <ul>
+                            <li v-for="habilidad in pokemon_data[6]">{{ habilidad | capitalize }}</li>
+                        </ul>   
+            </div>
+            <div class="alert alert-info">
+                Movimientos:    
+                        <ul>
+                            <li v-for="move in pokemon_data[7]">{{ move | capitalize }}</li>
+                        </ul>   
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        var p_nombre= 'Bulbasaur';
+        var p_peso= '69';
+        var p_alto= '7';
+        var p_back_url= 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png';
+        var p_front_url='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png';
+        var p_tipos= ["Grass", "Poison"];
+        var p_moves= ['Esquivar', 'Latigo Cepa'];
+        var p_habilidades= ['Cut', 'Swords-dance','Razor-wind'];
+
+        var vm = new Vue({
+            el: "#cuerpo",
+            data: {
+                pokemon_index: 1,
+                /*nombre: 'Bulbasaur',
+                peso: '69',
+                alto: '7',*/
+                back_url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png',
+                front_url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+                tipos: ["Grass", "Poison"],
+                moves: ['Esquivar', 'Latigo Cepa'],
+                habilidades: ['Cut', 'Swords-dance','Razor-wind'],
+                pokemon_data: [p_nombre, p_peso,p_alto , p_back_url, p_front_url, p_tipos, p_moves, p_habilidades]
+            },
+      //Creamos el filtro para poner en mayuscula
+            filters: {
+                capitalize: function (value) {
+                  if (!value) return ''
+                  value = value.toString()
+                  return value.charAt(0).toUpperCase() + value.slice(1)
+                }
+            },
+      //Este watch es para que al cambiar el pokemon_index se manden los datos, por que el binding 
+      //se perdio desde que empeze a guardar todo en un array
+             watch: {
+                pokemon_index: function(){
+                    this.getDatos();
+                }
+            },
+            methods: {
+                restar: function(){
+                    if(this.pokemon_index>1) this.pokemon_index--;
+                },
+                index: function() {
+                    return 'pokemon_'+this.pokemon_index;
+                },
+                getDatos: function(reload = false) {
+                    if(lscache.get(vm.pokemon_index) && reload == false){
+                        this.pokemon_data = [];
+                        this.pokemon_data = lscache.get(this.pokemon_index);
+                    }
+                    else{
+                        var xmlHttp;
+                            try{
+                                xmlHttp=new XMLHttpRequest(); // Firefox, Opera 8.0+, Safari
+                            }
+                            catch (e){
+                                try{
+                                    xmlHttp=new ActiveXObject("Msxml2.XMLHTTP"); // Internet Explorer
+                                }
+                                catch (e){
+                                    try{
+                                        xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+                                    }
+                                    catch (e){
+                                        alert("Tu explorador no soporta AJAX.");
+                                        return false;
+                                    }
+                                }
+                            }
+                            xmlHttp.open("GET",'http://pokeapi.co/api/v2/pokemon/'+this.pokemon_index,true);
+                            xmlHttp.send(null);
+                            var datos;
+                            xmlHttp.onreadystatechange=function(){
+                                if(xmlHttp.readyState== 4 && xmlHttp.readyState != null){
+                                    datos = JSON.parse(xmlHttp.responseText);
+                                    vm.habilidades = [];
+                                    for (var i = datos['abilities'].length - 1; i >= 0; i--) {
+                                        vm.habilidades.push(datos['abilities'][i]['ability']['name']);
+                                    };
+                                    vm.moves = [];
+                                    for (var i = 2; i >= 0; i--) {
+                                        vm.moves.push(datos['moves'][i]['move']['name']);
+                                    };
+                                    vm.tipos = [];
+                                    for (var i = datos['types'].length - 1; i >= 0; i--) {
+                                        vm.tipos.push(datos['types'][i]['type']['name']);
+                                    };
+                                    vm.back_url = datos['sprites']['back_default'];
+                                    vm.front_url = datos['sprites']['front_default'];
+                                    vm.pokemon_data = [];
+                                    vm.pokemon_data = [datos['name'], datos['weight'], datos['height'], vm.back_url, vm.front_url, vm.tipos,vm.moves, vm.habilidades];
+                                    lscache.set(vm.pokemon_index, vm.pokemon_data);
+
+                                }
+                            }
+                    }
+                }
+
+            },
+        });
+    </script>
+
+</body>
+</html>

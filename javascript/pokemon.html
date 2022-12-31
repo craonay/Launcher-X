@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"content="IE=edge">
+    <meta name="viewport"contect="width=device-width,initial-scale=1.0">
+    
+
+    <title>Mi Pokedex</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+    <!-- Formulario de búsqueda -->
+    <form id="search-form">
+      <input type="text" id="search-input" placeholder="Ingresa el nombre de un Pokémon">
+      <button type="submit">Buscar</button>
+    </form>
+    
+    <!-- Contenedor para mostrar los resultados de la búsqueda -->
+    <div id="search-results">
+      <!-- Nombre del Pokémon -->
+      <h2 id="pokemon-name"></h2>
+      
+      <!-- Imágen del Pokémon -->
+      <img id="pokemon-image" src="" alt="">
+      
+      <!-- Tipo de Pokémon -->
+      <p id="pokemon-type"></p>
+      
+      <!-- Estadísticas -->
+      <table id="pokemon-stats">
+        <tr>
+          <th>Atributo</th>
+          <th>Valor</th>
+        </tr>
+      </table>
+      
+      <!-- Movimientos -->
+      <ul id="pokemon-moves">
+      </ul>
+    </div>
+    
+    <!-- Cargar el script de JavaScript -->
+    <script src="script.js"></script>
+  </body>
+
+  <style>
+
+ /* Estilo CSS */
+body {
+  font-family: sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+#search-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#search-input {
+  flex-grow: 1;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  padding: 10px;
+}
+
+#search-form button[type="submit"] {
+  font-size: 18px;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  padding: 10px 20px;
+  background-color: #0091ea;
+  color: white;
+}
+
+#search-results {
+  display: none;
+}
+
+#search-results h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+#search-results img {
+  width: 200px;
+  display: block;
+  margin: 0 auto;
+}
+
+#search-results p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+#search-results table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#search-results th,
+#search-results td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#search-results tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#search-results ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#search-results li {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+</style>
+
+
+<script >
+    
+    // Script de JavaScript
+
+    const fetchPokemon = () => {
+    const pokeNameInput = document.getElementById("pokeName");
+    let pokeName = pokeNameInput.value;
+    pokeName = pokeName.toLowerCase();
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokeName}`;
+    fetch(url).then((res) => {
+        if (res.status != "200") {
+            console.log(res);
+            pokeImage("./pokemon-sad.gif")
+        }
+        else {
+            return res.json();
+        }
+    }).then((data) => {
+        if (data) {
+            console.log(data);
+            let pokeImg = data.sprites.front_default;
+            pokeImage(pokeImg);
+            console.log(pokeImg);
+        }
+    });
+}
+
+const pokeImage = (url) => {
+    const pokePhoto = document.getElementById("pokeImg");
+    pokePhoto.src = url;
+}
+
+
+// Escuchar el evento de submit del formulario
+document.getElementById('search-form').addEventListener('submit', event => {
+  // Prevenir que se envíe el formulario y se recargue la página
+  event.preventDefault();
+  
+  // Obtener el valor del input de búsqueda
+  const searchValue = document.getElementById('search-input').value;
+  
+  // Realizar la búsqueda de Pokémon con Fetch
+  fetch(`https://pokeapi.co/api/v2/pokemon/${searchValue}`)
+    .then(response => response.json())
+    .then(pokemon => {
+      // Mostrar el contenedor de resultados
+      document.getElementById('search-results').style.display = 'block';
+      
+      // Actualizar el nombre del Pokémon
+      document.getElementById('pokemon-name').innerText = pokemon.name;
+      
+      // Actualizar la imágen del Pokémon
+      document.getElementById('pokemon-image').src = pokemon.sprites.front_default;
+      
+      // Actualizar el tipo de Pokémon
+      document.getElementById('pokemon-type').innerText = pokemon.types[0].type.name;
+      
+      // Limpiar la tabla de estadísticas
+      let statsTable = document.getElementById('pokemon-stats');
+      while (statsTable.firstChild) {
+        statsTable.removeChild(statsTable.firstChild);
+      }
+      
+      // Agregar las estadísticas del Pokémon a la tabla
+      pokemon.stats.forEach(stat => {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.innerText = stat.stat.name;
+        const valueCell = document.createElement('td');
+        valueCell.innerText = stat.base_stat;
+        row.appendChild(nameCell);
+        row.appendChild(valueCell);
+        statsTable.appendChild(row);
+      });
+      
+      // Limpiar la lista de movimientos
+      const movesList = document.getElementById('pokemon-moves');
+      while (movesList.firstChild) {
+        movesList.removeChild(movesList.firstChild);
+      }
+      
+      // Agregar los movimientos del Pokémon a la lista
+      pokemon.moves.forEach(move => {
+        const listItem = document.createElement('li');
+        listItem.innerText = move.move.name;
+        movesList.appendChild(listItem);
+      });
+    })
+    .catch(error => {
+      // Manejar el error si hay problemas al realizar la búsqueda
+      console.error(error);
+    });
+});
+
+</script>
+
+
+</html>

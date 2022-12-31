@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"content="IE=edge">
+    <meta name="viewport"contect="width=device-width,initial-scale=1.0">
+    <title>Practica LaunchX Html</title>
+</head>
+<!--Headings-->
+<h1>Bienvenidos </h1>
+<title>Pastelería</title>
+  </head>
+  <body>
+    <header>
+      <h1>Pastelería</h1>
+      <nav>
+        <ul>
+          <li><a href="#sabores">Sabores</a></li>
+          <li><a href="#adornos">Adornos</a></li>
+          <li><a href="#formulario">Formulario</a></li>
+          <li><a href="#pastelero">Pastelero</a></li>
+          <li><a href="#informacion">Información</a></li>
+        </ul>
+      </nav>
+      <style>
+  hr {
+    width: 50px;
+    background-color: red;
+  }
+</style>
+
+<hr>
+    </header>
+    <main>
+      <section id="sabores">
+        <h2>Sabores</h2>
+        <table>
+          <tr>
+            <th>Sabor</th>
+            <th>Precio</th>
+          </tr>
+          <tr>
+            <td>Chocolate</td>
+            <td>$50</td>
+          </tr>
+          <tr>
+            <td>Fresa</td>
+            <td>$40</td>
+          </tr>
+          <tr>
+            <td>Limón</td>
+            <td>$45</td>
+          </tr>
+        </table>
+      </section>
+      <section id="adornos">
+        <h2>Adornos</h2>
+        <table>
+          <tr>
+            <th>Adorno</th>
+            <th>Precio</th>
+          </tr>
+          <tr>
+            <td>Flor</td>
+            <td>$10</td>
+          </tr>
+          <tr>
+            <td>Estras</td>
+            <td>$15</td>
+          </tr>
+          <tr>
+            <td>Glaseado</td>
+            <td>$20</td>
+          </tr>
+        </table>
+      </section>
+      <section id="formulario">
+        <h2>Formulario</h2>
+        <form>
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre"><br>
+          <label for="telefono">Teléfono:</label>
+          <input type="text" id="telefono" name="telefono"><br>
+          <label for="correo">Correo electrónico:</label>
+          <input type="email" id="correo" name="correo"><br>
+          <label for="descripcion">Descripción del pastel:</label><br>
+          <textarea id="descripcion" name="descripcion"></textarea><br>
+          <label for="sabores">Sabores:</label><br>
+          <input type="checkbox" id="sabor-chocolate" name="sabores" value="chocolate">
+          <label for="sabor-chocolate">Chocolate</label><br>
+          <input type="checkbox" id="sabor-fresa" name="sabores" value="fresa">
+          <label for="sabor-fresa">Fresa</label><br>
+          <input type="checkbox" id="sabor-limon" name="sabores" value="limon">
+          <label for="sabor-limon">Limón</label><br>
+          <label for="adornos">Adornos:</label><br>
+          <input type="checkbox" id="adorno-flor" name="adornos" value="flor">
+          <label for="adorno-flor">Flor</label><br>
+          <input type="checkbox" id="adorno-estras" name="adornos" value="estras">
+          <label for="adorno-estras">Estras</label><br>
+          <input type="checkbox" id="adorno-glaseado" name="adornos" value="glaseado">
+          <label for="adorno-glaseado">Glaseado</label><br>
+          <input type="submit" value="Enviar pedido">
+        </form>
+      </section>
+      <section id="pastelero">
+        <style>
+  hr {
+    width: 50px;
+    background-color: red;
+  }
+</style>
+
+<hr>
+        <h2>Pastelero</h2>
+        <p>Sabores disponibles: 10</p>
+        <p>Adornos disponibles: 20</p>
+        <table>
+          <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Correo electrónico</th>
+            <th>Descripción del pastel</th>
+            <th>Sabores</th>
+            <th>Adornos</th>
+          </tr>
+          <tr>
+            <td>Juan Pérez</td>
+            <td>555-555-5555</td>
+            <td>juan@ejemplo.com</td>
+            <td>Pastel de chocolate con adorno de flor</td>
+            <td>Chocolate</td>
+            <td>Flor</td>
+          </tr>
+        </table>
+      </section>
+      <section id="informacion">
+        <h2>Información</h2>
+        <p>Dirección: Calle Falsa 123</p>
+        <p>Teléfono: 555-555-5555</p>
+        <p>Horarios de atención: Lunes a viernes de 9:00 a 18:00</p>
+      </section>
+    </main>
+    <footer>
+      <p>Copyright 2021 Pastelería</p>
+    </footer>
+</body>
+</html>
